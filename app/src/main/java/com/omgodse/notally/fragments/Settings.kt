@@ -1,7 +1,6 @@
 package com.omgodse.notally.fragments
 
 import android.app.Activity
-import android.app.Application
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -11,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -24,7 +22,6 @@ import com.omgodse.notally.databinding.DialogProgressBinding
 import com.omgodse.notally.databinding.FragmentSettingsBinding
 import com.omgodse.notally.databinding.PreferenceBinding
 import com.omgodse.notally.databinding.PreferenceSeekbarBinding
-import com.omgodse.notally.miscellaneous.Operations
 import com.omgodse.notally.preferences.*
 import com.omgodse.notally.viewmodels.BaseNoteModel
 
@@ -73,19 +70,11 @@ class Settings : Fragment() {
         setupProgressDialog(R.string.importing_backup, model.importingBackup)
 
         binding.GitHub.setOnClickListener {
-            openLink("https://github.com/OmGodse/Notally")
+            openLink("https://github.com/adamthiede/notally")
         }
 
         binding.Libraries.setOnClickListener {
             displayLibraries()
-        }
-
-        binding.Rate.setOnClickListener {
-            openLink("https://play.google.com/store/apps/details?id=com.omgodse.notally")
-        }
-
-        binding.SendFeedback.setOnClickListener {
-            sendEmailWithLog()
         }
     }
 
@@ -150,27 +139,6 @@ class Settings : Fragment() {
         }
     }
 
-
-    private fun sendEmailWithLog() {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.selector = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"))
-
-        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("omgodseapps@gmail.com"))
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Notally [Feedback]")
-
-        val app = requireContext().applicationContext as Application
-        val log = Operations.getLog(app)
-        if (log.exists()) {
-            val uri = FileProvider.getUriForFile(app, "${app.packageName}.provider", log)
-            intent.putExtra(Intent.EXTRA_STREAM, uri)
-        }
-
-        try {
-            startActivity(intent)
-        } catch (exception: ActivityNotFoundException) {
-            Toast.makeText(requireContext(), R.string.install_an_email, Toast.LENGTH_LONG).show()
-        }
-    }
 
     private fun displayLibraries() {
         val libraries = arrayOf("Glide", "Pretty Time", "Swipe Layout", "Work Manager", "Subsampling Scale ImageView" ,"Material Components for Android")
