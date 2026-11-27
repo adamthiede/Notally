@@ -25,9 +25,7 @@ import androidx.navigation.navOptions
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.transition.MaterialFade
 import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMainBinding
@@ -100,17 +98,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupActionMode() {
         binding.ActionMode.setNavigationOnClickListener { model.actionMode.close(true) }
 
-        val transition = MaterialFade()
-        transition.secondaryAnimatorProvider = null
-
-        transition.excludeTarget(binding.NavHostFragment, true)
-        transition.excludeChildren(binding.NavHostFragment, true)
-        transition.excludeTarget(binding.TakeNote, true)
-        transition.excludeTarget(binding.MakeList, true)
-        transition.excludeTarget(binding.NavigationView, true)
-
         model.actionMode.enabled.observe(this) { enabled ->
-            TransitionManager.beginDelayedTransition(binding.RelativeLayout, transition)
             if (enabled) {
                 binding.Toolbar.visibility = View.GONE
                 binding.ActionMode.visibility = View.VISIBLE
@@ -241,7 +229,7 @@ class MainActivity : AppCompatActivity() {
                 displaySelectLabelsDialog(labels, baseNote)
             } else {
                 model.actionMode.close(true)
-                navigateWithAnimation(R.id.Labels)
+                navigateTo(R.id.Labels)
             }
         }
     }
@@ -362,7 +350,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onDrawerClosed(drawerView: View) {
                 if (fragmentIdToLoad != null && navController.currentDestination?.id != fragmentIdToLoad) {
-                    navigateWithAnimation(requireNotNull(fragmentIdToLoad))
+                    navigateTo(requireNotNull(fragmentIdToLoad))
                 }
             }
         })
@@ -394,15 +382,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateWithAnimation(id: Int) {
+    private fun navigateTo(id: Int) {
         val options = navOptions {
             launchSingleTop = true
-            anim {
-                exit = androidx.navigation.ui.R.anim.nav_default_exit_anim
-                enter = androidx.navigation.ui.R.anim.nav_default_enter_anim
-                popExit = androidx.navigation.ui.R.anim.nav_default_pop_exit_anim
-                popEnter = androidx.navigation.ui.R.anim.nav_default_pop_enter_anim
-            }
             popUpTo(navController.graph.startDestination) { inclusive = false }
         }
         navController.navigate(id, null, options)

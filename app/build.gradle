@@ -55,6 +55,12 @@ android {
     }
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
+    }
+}
+
 dependencies {
     final def navVersion = "2.3.5"
     final def roomVersion = "2.7.0"

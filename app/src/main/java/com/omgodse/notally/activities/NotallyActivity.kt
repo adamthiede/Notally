@@ -34,10 +34,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Transition
-import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.transition.MaterialFade
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityNotallyBinding
 import com.omgodse.notally.databinding.DialogProgressBinding
@@ -576,35 +573,17 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
         val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
-        val transition = MaterialFade()
-        transition.secondaryAnimatorProvider = null
-        transition.addListener(object : Transition.TransitionListener {
-
-            override fun onTransitionEnd(transition: Transition) {
-                if (binding.Search.visibility == View.VISIBLE) {
-                    binding.EnterSearchKeyword.requestFocus()
-                    manager.showSoftInput(binding.EnterSearchKeyword, InputMethodManager.SHOW_IMPLICIT)
-                } else {
-                    binding.EnterSearchKeyword.text.clear()
-                    manager.hideSoftInputFromWindow(binding.EnterSearchKeyword.windowToken, 0)
-                }
-            }
-
-            override fun onTransitionStart(transition: Transition) {}
-
-            override fun onTransitionCancel(transition: Transition) {}
-
-            override fun onTransitionPause(transition: Transition) {}
-
-            override fun onTransitionResume(transition: Transition) {}
-        })
-
         model.searchEnabled.observe(this, Observer { enabled ->
-            TransitionManager.beginDelayedTransition(binding.ToolbarContainer, transition)
             if (enabled) {
                 binding.Search.visibility = View.VISIBLE
+                binding.Search.post {
+                    binding.EnterSearchKeyword.requestFocus()
+                    manager.showSoftInput(binding.EnterSearchKeyword, InputMethodManager.SHOW_IMPLICIT)
+                }
             } else {
                 binding.Search.visibility = View.GONE
+                binding.EnterSearchKeyword.text.clear()
+                manager.hideSoftInputFromWindow(binding.EnterSearchKeyword.windowToken, 0)
             }
         })
 

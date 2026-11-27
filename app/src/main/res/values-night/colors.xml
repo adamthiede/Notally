@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- MMD-inspired monochrome palette for E Ink displays. -->
+    <color name="eink_paper">#FF000000</color>
+    <color name="eink_ink">#FFFFFFFF</color>
+    <color name="eink_pressed">#FF333333</color>
+    <color name="eink_divider">#FFFFFFFF</color>
+
     <color name="Default">#121212</color>
     <color name="Coral">#76172D</color>
     <color name="Orange">#692A18</color>

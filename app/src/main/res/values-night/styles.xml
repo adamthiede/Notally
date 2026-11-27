@@ -2,9 +2,13 @@
 <resources>
 
     <style name="AppTheme" parent="Base.AppTheme">
-        <item name="colorPrimary">@color/LightBlue100</item>
-        <item name="alternateFabTint">?attr/colorOnSecondary</item>
-        <item name="alternateFabBackground">@color/Indigo100</item>
+        <item name="colorPrimary">@color/eink_ink</item>
+        <item name="colorOnPrimary">@color/eink_paper</item>
+        <item name="colorPrimaryDark">@color/eink_paper</item>
+        <item name="colorSurface">@color/eink_paper</item>
+        <item name="colorOnSurface">@color/eink_ink</item>
+        <item name="alternateFabTint">@color/eink_paper</item>
+        <item name="alternateFabBackground">@color/eink_ink</item>
     </style>
 
 </resources>

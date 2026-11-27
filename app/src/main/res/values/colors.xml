@@ -9,6 +9,12 @@
     <color name="Black">#000000</color>
     <color name="Transparent">#00000000</color>
 
+    <!-- MMD-inspired monochrome palette for E Ink displays. -->
+    <color name="eink_paper">#FFFFFFFF</color>
+    <color name="eink_ink">#FF000000</color>
+    <color name="eink_pressed">#FFE0E0E0</color>
+    <color name="eink_divider">#FF000000</color>
+
     <color name="Grey100">#F5F5F5</color>
 
     <color name="Default">#FFFFFF</color>

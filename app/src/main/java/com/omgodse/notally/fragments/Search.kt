@@ -2,7 +2,6 @@ package com.omgodse.notally.fragments
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.RippleDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -18,9 +17,9 @@ class Search : NotallyFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.Notes?.background = getRippleDrawable(requireContext())
-        binding?.Deleted?.background = getRippleDrawable(requireContext())
-        binding?.Archived?.background = getRippleDrawable(requireContext())
+        binding?.Notes?.background = getFilterDrawable(requireContext())
+        binding?.Deleted?.background = getFilterDrawable(requireContext())
+        binding?.Archived?.background = getFilterDrawable(requireContext())
 
         val checked = when (model.searchQuery.value.second) {
             Folder.NOTES -> R.id.Notes
@@ -43,7 +42,7 @@ class Search : NotallyFragment() {
         }
     }
 
-    private fun getRippleDrawable(context: Context): Drawable {
+    private fun getFilterDrawable(context: Context): Drawable {
         val model = ShapeAppearanceModel.builder()
             .setAllCorners(RoundedCornerTreatment())
             .setAllCornerSizes(RelativeCornerSize(0.5f))
@@ -54,8 +53,7 @@ class Search : NotallyFragment() {
         base.strokeColor = ContextCompat.getColorStateList(context, R.color.chip_stroke)
         base.fillColor = ContextCompat.getColorStateList(context, R.color.chip_background)
 
-        val ripple = requireNotNull(ContextCompat.getColorStateList(context, R.color.chip_ripple))
-        return RippleDrawable(ripple, base, null)
+        return base
     }
 
 

@@ -58,8 +58,8 @@
             android:contentDescription="@string/make_list"
             android:tooltipText="@string/make_list"
             app:backgroundTint="?attr/alternateFabBackground"
-            app:elevation="2dp"
-            app:pressedTranslationZ="4dp"
+            app:elevation="0dp"
+            app:pressedTranslationZ="0dp"
             app:srcCompat="@drawable/checkbox"
             app:tint="?attr/alternateFabTint" />
 
@@ -73,6 +73,8 @@
             android:layout_marginBottom="16dp"
             android:contentDescription="@string/take_note"
             android:tooltipText="@string/take_note"
+            app:elevation="0dp"
+            app:pressedTranslationZ="0dp"
             app:shapeAppearanceOverlay="@style/RoundedRectangle"
             app:srcCompat="@drawable/edit" />
 
@@ -85,7 +87,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:cardCornerRadius="0dp"
-        app:cardElevation="16dp">
+        app:cardElevation="0dp">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

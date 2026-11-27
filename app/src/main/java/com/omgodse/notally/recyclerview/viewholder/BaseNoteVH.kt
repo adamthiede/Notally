@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.omgodse.notally.R
@@ -173,7 +172,6 @@ class BaseNoteVH(
             Glide.with(binding.ImageView)
                 .load(file)
                 .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .listener(object : RequestListener<Drawable> {
 
