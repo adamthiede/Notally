@@ -17,9 +17,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/RadioGroup"
         android:clipToPadding="false"
-        android:paddingStart="4dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="4dp"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical" />
 

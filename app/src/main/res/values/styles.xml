@@ -11,6 +11,8 @@
         <item name="colorPrimaryDark">?attr/colorSurface</item>
 
         <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">?attr/colorSurface</item>
         <item name="android:colorBackground">?attr/colorSurface</item>
         <item name="android:colorEdgeEffect">@color/Transparent</item>

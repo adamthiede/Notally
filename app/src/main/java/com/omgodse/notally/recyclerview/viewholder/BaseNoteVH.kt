@@ -151,11 +151,8 @@ class BaseNoteVH(
         val context = binding.root.context
 
         if (color == Color.DEFAULT) {
-            val stroke = ContextCompat.getColorStateList(context, R.color.chip_stroke)
-            binding.root.setStrokeColor(stroke)
-            binding.root.setCardBackgroundColor(0)
+            binding.root.setCardBackgroundColor(ContextCompat.getColor(context, R.color.eink_paper))
         } else {
-            binding.root.strokeColor = 0
             val colorInt = Operations.extractColor(color, context)
             binding.root.setCardBackgroundColor(colorInt)
         }

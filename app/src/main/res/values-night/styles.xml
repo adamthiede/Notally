@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/eink_ink</item>
         <item name="colorOnPrimary">@color/eink_paper</item>
         <item name="colorPrimaryDark">@color/eink_paper</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="colorSurface">@color/eink_paper</item>
         <item name="colorOnSurface">@color/eink_ink</item>
         <item name="alternateFabTint">@color/eink_paper</item>

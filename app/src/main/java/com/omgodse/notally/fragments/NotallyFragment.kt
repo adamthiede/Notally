@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -14,8 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.omgodse.notally.activities.MakeList
 import com.omgodse.notally.activities.TakeNote
+import com.omgodse.notally.R
 import com.omgodse.notally.databinding.FragmentNotesBinding
 import com.omgodse.notally.miscellaneous.Constants
+import com.omgodse.notally.recyclerview.DashedDividerItemDecoration
 import com.omgodse.notally.recyclerview.ItemListener
 import com.omgodse.notally.recyclerview.adapter.BaseNoteAdapter
 import com.omgodse.notally.room.BaseNote
@@ -132,6 +135,9 @@ abstract class NotallyFragment : Fragment(), ItemListener {
         binding?.RecyclerView?.layoutManager = if (model.preferences.view.value == ViewPref.grid) {
             StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
         } else LinearLayoutManager(requireContext())
+
+        val dividerColor = ContextCompat.getColor(requireContext(), R.color.eink_divider)
+        binding?.RecyclerView?.addItemDecoration(DashedDividerItemDecoration(dividerColor))
     }
 
 

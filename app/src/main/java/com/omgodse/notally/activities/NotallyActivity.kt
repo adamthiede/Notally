@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -26,6 +27,7 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
@@ -357,9 +359,9 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     private fun setupColor() {
         model.color.observe(this, Observer { color ->
             val colorInt = Operations.extractColor(color, this)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                window.statusBarColor = colorInt
-            }
+            window.statusBarColor = colorInt
+            val luminance = (0.299 * Color.red(colorInt) + 0.587 * Color.green(colorInt) + 0.114 * Color.blue(colorInt)) / 255
+            WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = luminance > 0.5
             binding.root.setBackgroundColor(colorInt)
             binding.RecyclerView.setBackgroundColor(colorInt)
             binding.Toolbar.backgroundTintList = ColorStateList.valueOf(colorInt)

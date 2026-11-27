@@ -352,10 +352,18 @@ class MainActivity : AppCompatActivity() {
         configuration = AppBarConfiguration(topLevelDestinations, binding.DrawerLayout)
         setupActionBarWithNavController(navController, configuration)
 
+        binding.Toolbar.setNavigationOnClickListener {
+            if (configuration.topLevelDestinations.contains(navController.currentDestination?.id)) {
+                binding.DrawerLayout.openDrawer(GravityCompat.START, false)
+            } else {
+                navController.navigateUp(configuration)
+            }
+        }
+
         var fragmentIdToLoad: Int? = null
         binding.NavigationView.onItemClickListener = { id ->
             fragmentIdToLoad = id
-            binding.DrawerLayout.closeDrawer(GravityCompat.START)
+            binding.DrawerLayout.closeDrawer(GravityCompat.START, false)
         }
 
         binding.DrawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
