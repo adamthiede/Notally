@@ -10,7 +10,7 @@ android {
     namespace 'com.omgodse.notally'
 
     defaultConfig {
-        applicationId 'com.omgodse.notally'
+        applicationId 'com.adamthiede.notallybw'
         minSdk 21
         targetSdk 35
         versionCode 57
