@@ -19,6 +19,10 @@ Notally was created because I wanted to make something that was beautiful and at
 
 The UI follows Mudita Mindful Design principles for E Ink displays: monochrome light/dark palettes, Lato typography at larger sizes, no ripple or hover effects, and no entrance, transition, or image cross-fade animations. The native XML views implement these tokens directly, so no Compose dependency is required.
 
+### CI and releases
+
+Pull requests build a debug APK. Publishing a GitHub release builds a signed release APK and attaches it to that release. Configure these repository secrets for release signing: `RELEASE_KEYSTORE_BASE64` (base64-encoded JKS), `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS`, and `RELEASE_KEY_PASSWORD`.
+
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play"  height="70"/>](https://play.google.com/store/apps/details?id=com.omgodse.notally)
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="70"/>](https://f-droid.org/packages/com.omgodse.notally/)
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="70"/>](https://apt.izzysoft.de/packages/com.omgodse.notally)

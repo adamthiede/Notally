@@ -47,37 +47,6 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/navigation" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/MakeList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/TakeNote"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:contentDescription="@string/make_list"
-            android:tooltipText="@string/make_list"
-            app:backgroundTint="?attr/alternateFabBackground"
-            app:elevation="0dp"
-            app:pressedTranslationZ="0dp"
-            app:srcCompat="@drawable/checkbox"
-            app:tint="?attr/alternateFabTint" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/TakeNote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:contentDescription="@string/take_note"
-            android:tooltipText="@string/take_note"
-            app:elevation="0dp"
-            app:pressedTranslationZ="0dp"
-            app:shapeAppearanceOverlay="@style/RoundedRectangle"
-            app:srcCompat="@drawable/edit" />
-
     </RelativeLayout>
 
     <com.omgodse.notally.view.NavigationView

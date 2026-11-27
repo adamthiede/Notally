@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var configuration: AppBarConfiguration
 
+    private var currentDestinationId = R.id.Notes
+
     private val model: BaseNoteModel by viewModels()
 
     override fun onBackPressed() {
@@ -67,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.Toolbar)
-        setupFAB()
         setupActionMode()
         setupNavigation()
         setupSearch()
@@ -83,14 +84,25 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun setupFAB() {
-        binding.TakeNote.setOnClickListener {
-            val intent = Intent(this, TakeNote::class.java)
-            startActivity(intent)
-        }
-        binding.MakeList.setOnClickListener {
-            val intent = Intent(this, MakeList::class.java)
-            startActivity(intent)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        val show = currentDestinationId == R.id.Notes
+        menu.findItem(R.id.TakeNote).isVisible = show
+        menu.findItem(R.id.MakeList).isVisible = show
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.TakeNote -> {
+                startActivity(Intent(this, TakeNote::class.java))
+                true
+            }
+            R.id.MakeList -> {
+                startActivity(Intent(this, MakeList::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -363,13 +375,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleDestinationChange(destination: NavDestination) {
-        if (destination.id == R.id.Notes) {
-            binding.TakeNote.show()
-            binding.MakeList.show()
-        } else {
-            binding.TakeNote.hide()
-            binding.MakeList.hide()
-        }
+        currentDestinationId = destination.id
+        invalidateOptionsMenu()
 
         val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         if (destination.id == R.id.Search) {

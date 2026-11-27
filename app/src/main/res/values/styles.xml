@@ -44,7 +44,7 @@
     <style name="AppTheme" parent="Base.AppTheme">
         <item name="colorPrimary">@color/eink_ink</item>
         <item name="colorOnPrimary">@color/eink_paper</item>
-        <item name="colorPrimaryDark">@color/eink_ink</item>
+        <item name="colorPrimaryDark">@color/eink_paper</item>
         <item name="colorSurface">@color/eink_paper</item>
         <item name="colorOnSurface">@color/eink_ink</item>
         <item name="alternateFabTint">@color/eink_paper</item>
@@ -53,8 +53,9 @@
 
     <style name="Widget" parent="AppTheme" />
 
+    <!-- Pre-23 status bar icons are always light, so keep the bar dark there. -->
     <style name="MainActivity" parent="AppTheme">
-        <item name="android:statusBarColor">@color/Transparent</item>
+        <item name="android:statusBarColor">@color/Black</item>
     </style>
 
 
