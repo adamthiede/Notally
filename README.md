@@ -21,7 +21,7 @@ The UI follows Mudita Mindful Design principles for E Ink displays: monochrome l
 
 ### CI and releases
 
-Pull requests build a debug APK. Publishing a GitHub release builds a signed release APK and attaches it to that release. Configure these repository secrets for release signing: `RELEASE_KEYSTORE_BASE64` (base64-encoded JKS), `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS`, and `RELEASE_KEY_PASSWORD`.
+Pull requests build a debug APK. Merges to `master` create a GitHub release tagged `yyyy-mm-dd-hh-mm` (UTC) and attach a signed release APK; publishing a release manually does the same build/attach step. Configure these repository secrets for release signing: `RELEASE_KEYSTORE_BASE64` (base64-encoded JKS), `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS`, and `RELEASE_KEY_PASSWORD`.
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play"  height="70"/>](https://play.google.com/store/apps/details?id=com.omgodse.notally)
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="70"/>](https://f-droid.org/packages/com.omgodse.notally/)
