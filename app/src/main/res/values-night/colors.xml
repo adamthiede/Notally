@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="Default">#121212</color>
-    <color name="Coral">#76172D</color>
-    <color name="Orange">#692A18</color>
-    <color name="Sand">#7C4A03</color>
-    <color name="Storm">#274255</color>
-    <color name="Fog">#256476</color>
-    <color name="Sage">#0C635D</color>
-    <color name="Mint">#264D3B</color>
-    <color name="Dusk">#482E5B</color>
-    <color name="Flower">#880E4F</color>
-    <color name="Blossom">#6D394F</color>
-    <color name="Clay">#4B443A</color>
+    <!-- MMD-inspired monochrome palette for E Ink displays. -->
+    <color name="eink_paper">#FF000000</color>
+    <color name="eink_ink">#FFFFFFFF</color>
+    <color name="eink_pressed">#FF333333</color>
+    <color name="eink_divider">#FFFFFFFF</color>
+
+    <!-- Grayscale note shades for e Ink; white text stays readable on every swatch. -->
+    <color name="Default">#FF121212</color>
+    <color name="Coral">#FF1A1A1A</color>
+    <color name="Orange">#FF222222</color>
+    <color name="Sand">#FF2A2A2A</color>
+    <color name="Storm">#FF323232</color>
+    <color name="Fog">#FF3A3A3A</color>
+    <color name="Sage">#FF424242</color>
+    <color name="Mint">#FF4A4A4A</color>
+    <color name="Dusk">#FF525252</color>
+    <color name="Flower">#FF5A5A5A</color>
+    <color name="Blossom">#FF626262</color>
+    <color name="Clay">#FF6A6A6A</color>
 </resources>

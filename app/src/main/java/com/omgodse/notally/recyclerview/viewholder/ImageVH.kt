@@ -13,7 +13,7 @@ class ImageVH(private val binding: RecyclerImageBinding) : RecyclerView.ViewHold
 
     init {
         binding.SSIV.setDoubleTapZoomDpi(320)
-        binding.SSIV.setDoubleTapZoomDuration(200)
+        binding.SSIV.setDoubleTapZoomDuration(0)
         binding.SSIV.setDoubleTapZoomStyle(SubsamplingScaleImageView.ZOOM_FOCUS_CENTER)
         binding.SSIV.orientation = SubsamplingScaleImageView.ORIENTATION_USE_EXIF
 

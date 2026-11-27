@@ -10,7 +10,7 @@
         android:id="@+id/ToolbarContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="4dp">
+        android:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/Toolbar"
@@ -85,7 +85,7 @@
                 android:paddingEnd="24dp"
                 android:text="@string/date"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:textColorHint" />
+                android:textColor="?attr/colorOnSurface" />
 
             <TextView
                 android:id="@+id/Reminder"
@@ -101,10 +101,9 @@
                 android:textAppearance="?attr/textAppearanceBody2"
                 app:drawableStartCompat="@drawable/reminder_20" />
 
-            <View
+            <com.omgodse.notally.view.DashedDividerView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="1dp" />
 
             <com.omgodse.notally.view.OverflowEditText
                 android:id="@+id/EnterBody"

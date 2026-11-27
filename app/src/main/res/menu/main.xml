@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/TakeNote"
+        android:icon="@drawable/edit"
+        android:title="@string/take_note"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/MakeList"
+        android:icon="@drawable/checkbox"
+        android:title="@string/make_list"
+        app:showAsAction="always" />
+
+</menu>

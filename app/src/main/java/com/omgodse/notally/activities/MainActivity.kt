@@ -25,9 +25,7 @@ import androidx.navigation.navOptions
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.transition.MaterialFade
 import com.omgodse.notally.MenuDialog
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityMainBinding
@@ -51,6 +49,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var configuration: AppBarConfiguration
 
+    private var currentDestinationId = R.id.Notes
+
     private val model: BaseNoteModel by viewModels()
 
     override fun onBackPressed() {
@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.Toolbar)
-        setupFAB()
         setupActionMode()
         setupNavigation()
         setupSearch()
@@ -85,14 +84,25 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun setupFAB() {
-        binding.TakeNote.setOnClickListener {
-            val intent = Intent(this, TakeNote::class.java)
-            startActivity(intent)
-        }
-        binding.MakeList.setOnClickListener {
-            val intent = Intent(this, MakeList::class.java)
-            startActivity(intent)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        val show = currentDestinationId == R.id.Notes
+        menu.findItem(R.id.TakeNote).isVisible = show
+        menu.findItem(R.id.MakeList).isVisible = show
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.TakeNote -> {
+                startActivity(Intent(this, TakeNote::class.java))
+                true
+            }
+            R.id.MakeList -> {
+                startActivity(Intent(this, MakeList::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -100,17 +110,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupActionMode() {
         binding.ActionMode.setNavigationOnClickListener { model.actionMode.close(true) }
 
-        val transition = MaterialFade()
-        transition.secondaryAnimatorProvider = null
-
-        transition.excludeTarget(binding.NavHostFragment, true)
-        transition.excludeChildren(binding.NavHostFragment, true)
-        transition.excludeTarget(binding.TakeNote, true)
-        transition.excludeTarget(binding.MakeList, true)
-        transition.excludeTarget(binding.NavigationView, true)
-
         model.actionMode.enabled.observe(this) { enabled ->
-            TransitionManager.beginDelayedTransition(binding.RelativeLayout, transition)
             if (enabled) {
                 binding.Toolbar.visibility = View.GONE
                 binding.ActionMode.visibility = View.VISIBLE
@@ -241,7 +241,7 @@ class MainActivity : AppCompatActivity() {
                 displaySelectLabelsDialog(labels, baseNote)
             } else {
                 model.actionMode.close(true)
-                navigateWithAnimation(R.id.Labels)
+                navigateTo(R.id.Labels)
             }
         }
     }
@@ -352,17 +352,25 @@ class MainActivity : AppCompatActivity() {
         configuration = AppBarConfiguration(topLevelDestinations, binding.DrawerLayout)
         setupActionBarWithNavController(navController, configuration)
 
+        binding.Toolbar.setNavigationOnClickListener {
+            if (configuration.topLevelDestinations.contains(navController.currentDestination?.id)) {
+                binding.DrawerLayout.openDrawer(GravityCompat.START, false)
+            } else {
+                navController.navigateUp(configuration)
+            }
+        }
+
         var fragmentIdToLoad: Int? = null
         binding.NavigationView.onItemClickListener = { id ->
             fragmentIdToLoad = id
-            binding.DrawerLayout.closeDrawer(GravityCompat.START)
+            binding.DrawerLayout.closeDrawer(GravityCompat.START, false)
         }
 
         binding.DrawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
 
             override fun onDrawerClosed(drawerView: View) {
                 if (fragmentIdToLoad != null && navController.currentDestination?.id != fragmentIdToLoad) {
-                    navigateWithAnimation(requireNotNull(fragmentIdToLoad))
+                    navigateTo(requireNotNull(fragmentIdToLoad))
                 }
             }
         })
@@ -375,13 +383,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleDestinationChange(destination: NavDestination) {
-        if (destination.id == R.id.Notes) {
-            binding.TakeNote.show()
-            binding.MakeList.show()
-        } else {
-            binding.TakeNote.hide()
-            binding.MakeList.hide()
-        }
+        currentDestinationId = destination.id
+        invalidateOptionsMenu()
 
         val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         if (destination.id == R.id.Search) {
@@ -394,15 +397,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateWithAnimation(id: Int) {
+    private fun navigateTo(id: Int) {
         val options = navOptions {
             launchSingleTop = true
-            anim {
-                exit = androidx.navigation.ui.R.anim.nav_default_exit_anim
-                enter = androidx.navigation.ui.R.anim.nav_default_enter_anim
-                popExit = androidx.navigation.ui.R.anim.nav_default_pop_exit_anim
-                popEnter = androidx.navigation.ui.R.anim.nav_default_pop_enter_anim
-            }
             popUpTo(navController.graph.startDestination) { inclusive = false }
         }
         navController.navigate(id, null, options)

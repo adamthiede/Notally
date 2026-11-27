@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="config_navAnimTime">300</integer>
+    <!-- MMD avoids motion on E Ink displays: a single refresh is preferable to a tween. -->
+    <integer name="config_navAnimTime">0</integer>
+    <integer name="config_activityShortDur">0</integer>
+    <integer name="config_activityDefaultDur">0</integer>
 </resources>

@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.omgodse.notally.R
@@ -152,11 +151,8 @@ class BaseNoteVH(
         val context = binding.root.context
 
         if (color == Color.DEFAULT) {
-            val stroke = ContextCompat.getColorStateList(context, R.color.chip_stroke)
-            binding.root.setStrokeColor(stroke)
-            binding.root.setCardBackgroundColor(0)
+            binding.root.setCardBackgroundColor(ContextCompat.getColor(context, R.color.eink_paper))
         } else {
-            binding.root.strokeColor = 0
             val colorInt = Operations.extractColor(color, context)
             binding.root.setCardBackgroundColor(colorInt)
         }
@@ -173,7 +169,6 @@ class BaseNoteVH(
             Glide.with(binding.ImageView)
                 .load(file)
                 .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .listener(object : RequestListener<Drawable> {
 

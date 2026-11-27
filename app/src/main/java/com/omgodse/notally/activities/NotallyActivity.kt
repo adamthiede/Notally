@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -26,6 +27,7 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
@@ -34,10 +36,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Transition
-import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.transition.MaterialFade
 import com.omgodse.notally.R
 import com.omgodse.notally.databinding.ActivityNotallyBinding
 import com.omgodse.notally.databinding.DialogProgressBinding
@@ -360,9 +359,9 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
     private fun setupColor() {
         model.color.observe(this, Observer { color ->
             val colorInt = Operations.extractColor(color, this)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                window.statusBarColor = colorInt
-            }
+            window.statusBarColor = colorInt
+            val luminance = (0.299 * Color.red(colorInt) + 0.587 * Color.green(colorInt) + 0.114 * Color.blue(colorInt)) / 255
+            WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = luminance > 0.5
             binding.root.setBackgroundColor(colorInt)
             binding.RecyclerView.setBackgroundColor(colorInt)
             binding.Toolbar.backgroundTintList = ColorStateList.valueOf(colorInt)
@@ -576,35 +575,17 @@ abstract class NotallyActivity(private val type: Type) : AppCompatActivity() {
 
         val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
-        val transition = MaterialFade()
-        transition.secondaryAnimatorProvider = null
-        transition.addListener(object : Transition.TransitionListener {
-
-            override fun onTransitionEnd(transition: Transition) {
-                if (binding.Search.visibility == View.VISIBLE) {
-                    binding.EnterSearchKeyword.requestFocus()
-                    manager.showSoftInput(binding.EnterSearchKeyword, InputMethodManager.SHOW_IMPLICIT)
-                } else {
-                    binding.EnterSearchKeyword.text.clear()
-                    manager.hideSoftInputFromWindow(binding.EnterSearchKeyword.windowToken, 0)
-                }
-            }
-
-            override fun onTransitionStart(transition: Transition) {}
-
-            override fun onTransitionCancel(transition: Transition) {}
-
-            override fun onTransitionPause(transition: Transition) {}
-
-            override fun onTransitionResume(transition: Transition) {}
-        })
-
         model.searchEnabled.observe(this, Observer { enabled ->
-            TransitionManager.beginDelayedTransition(binding.ToolbarContainer, transition)
             if (enabled) {
                 binding.Search.visibility = View.VISIBLE
+                binding.Search.post {
+                    binding.EnterSearchKeyword.requestFocus()
+                    manager.showSoftInput(binding.EnterSearchKeyword, InputMethodManager.SHOW_IMPLICIT)
+                }
             } else {
                 binding.Search.visibility = View.GONE
+                binding.EnterSearchKeyword.text.clear()
+                manager.hideSoftInputFromWindow(binding.EnterSearchKeyword.windowToken, 0)
             }
         })
 
